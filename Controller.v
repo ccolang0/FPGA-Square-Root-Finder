@@ -4,6 +4,7 @@ module Controller(
     input wire clk, clr, start,                         // external timing inputs
                greater,                             // internal inputx from data path
     output reg en_a, en_del, en_sq, en_out, ld_add      // outgoing enable signals to data path
+//    ,output reg [1:0] pres, next
 );
     
     // State variables and values
@@ -30,7 +31,7 @@ module Controller(
     
     // Output combinational logic -- using Moore machine state diagram
     always @(*) begin
-        en_a = 0; en_del = 0; en_sq = 0; en_out = 0;
+        en_a = 0; en_del = 0; en_sq = 0; en_out = 0; ld_add = 0;
         case (pres)
             idle:   ;
             load:   begin
@@ -38,8 +39,18 @@ module Controller(
                         en_del = 1;
                         en_sq = 1;
                     end
-            add:    ld_add = 1;
-            done:   en_out = 1;
+            add:    begin
+                        en_a = 1;
+                        en_del = 1;
+                        en_sq = 1;
+                        ld_add = 1;
+                    end
+            done:   begin
+                        en_a = 1;
+                        en_del = 1;
+                        en_sq = 1;
+                        en_out = 1;
+                    end
         endcase
     end
     
