@@ -16,9 +16,9 @@ module Display(
     reg [3:0] x;
     
     // wire connections between modules
-    Clock_Enable #(.src_freq(100000000), .target_freq(100000)) clock(.clk(clk),
-                                                                     .clr(clr),
-                                                                     .clk_en(clk_en));
+    Clock_Enable clock(.clk(clk),
+                       .clr(clr),
+                       .clk_en(clk_en));
 
     Anode_Driver an_drive(.clk_en(clk_en),
                           .reset(clr),
@@ -29,7 +29,7 @@ module Display(
                                .ca(ca) );
                                
     // 4x1 MUX to send correct dig to hex decoder
-    always @(s)
+    always @(*)
         case (s)
             2'b00 : x = dig4;  // rightmost
             2'b01 : x = dig3;

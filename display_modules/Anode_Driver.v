@@ -7,10 +7,6 @@ module Anode_Driver(
     output reg [3:0] an
     );
     
-    initial begin
-        s <= 0;
-    end
-    
     always @(posedge clk_en or posedge reset)
         if (reset) begin
             s <= 0;
