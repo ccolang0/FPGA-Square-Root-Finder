@@ -15,12 +15,12 @@ module Sq_Rt_Finder_Display(
 //    wire [3:0] dig1, dig2, dig3, dig4;
     reg b;
 
-    always @(posedge start or posedge clr) begin
-        if (clr)
-            b <= data;
-        else
-            b <= {4'b0000, sqrt};
-    end
+//    always @(posedge start or posedge clr) begin
+//        if (clr)
+//            b <= data;
+//        else
+//            b <= {4'b0000, sqrt};
+//    end
 //    assign dig1 = 0;
 //    assign dig2 = bcd_digs[9:8];
 //    assign dig3 = bcd_digs[7:4];
@@ -32,7 +32,7 @@ module Sq_Rt_Finder_Display(
                                  .a(data),
                                  .sqrt(sqrt));
                                  
-    Binary8_To_BCD bcd(.b(b),
+    Binary8_To_BCD bcd(.b(start ? sqrt : data),
                        .p(bcd_digs));
                        
     Display display(.clk(clk),
